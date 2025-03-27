@@ -8,7 +8,7 @@ public class TeacherActions : MonoBehaviour
 
     void Start()
     {
-        // Àò¨ú¦WºÙ¬° "¥D­nµêÀÀ¾ÉÄý­û" ªº¨¤¦âªº Animator ²Õ¥ó
+        // 在場景中尋找名為「主要虛擬導覽員」的角色，並取得其 Animator
         GameObject hutao = GameObject.Find("主要虛擬導覽員");
         if (hutao != null)
         {
@@ -19,40 +19,41 @@ public class TeacherActions : MonoBehaviour
             Debug.LogError("Cannot find GameObject named '主要虛擬導覽員'");
         }
 
-        // ¶}©l¨óµ{¡Aµ¥«Ý¤­¬í«á°õ¦æ ActionZero ¤èªk
+        // test
         //StartCoroutine(ExecuteActionZeroAfterDelay(5f));
     }
 
+    // 延遲一段時間後執行 ActionZero，用於測試或初始動畫觸發
     IEnumerator ExecuteActionZeroAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         ActionZero();
     }
 
-    // ©w¸q¦UºØ action ªº¥\¯à
+    // 執行自訂動作 ActionOne
     public void ActionOne()
     {
         Debug.Log("Action One Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // 此處可加入角色特定動畫或動作邏輯
     }
 
     public void ActionTwo()
     {
         Debug.Log("Action Two Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // 此處可加入角色特定動畫或動作邏輯
     }
 
     public void ActionThree()
     {
         Debug.Log("Action Three Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // 此處可加入角色特定動畫或動作邏輯
     }
 
     public void ActionZero()
     {
         Debug.Log("Action Zero Executed!");
 
-        // ³]¸m isDancing ¬° true ¨ÓÄ²µo°Êµeª¬ºA¤Á´«
+        // 設定參數 isDancing 為 true，讓 Animator 播放跳舞動畫
         if (hutaoAnimator != null)
         {
             hutaoAnimator.SetBool("isDancing", true);
@@ -65,7 +66,7 @@ public class TeacherActions : MonoBehaviour
 
     public void ExecuteAction(int action)
     {
-        // ®Ú¾Ú action ­È°õ¦æ¬ÛÀ³ªº¥\¯à
+        // 根據整數 action 編號執行對應的方法
         switch (action)
         {
             case 0:

@@ -34,22 +34,20 @@ public class UnityClientVoiceAPI : MonoBehaviour
     public TextMeshProUGUI ChatText;
     public InputActionProperty startTalk;
 
-    //¦Û°Ê·Æ°Ê¤å¦r
-    public ScrollRect scrollRect; // ³sµ²¨ì§Aªº Scroll View ¤Wªº ScrollRect
-    public float scrollSpeed = 4f; // ·Æ°Ê³t«×
-    private float targetPosition = 0f; // ¥Ø¼Ğ¦ì¸m
-    public float delayBeforeScroll = 3f; // ·Æ°Ê«eªº©µ¿ğ®É¶¡¡]¬í¡^
+    // æ»¾å‹•è¦–çª—ç”¨çš„ ScrollRect
+    public ScrollRect scrollRect; // ç”¨æ–¼é¡¯ç¤ºèŠå¤©è¨˜éŒ„çš„ Scroll View ä¸Šçš„ ScrollRect
+    public float scrollSpeed = 4f; // æ»¾å‹•é€Ÿåº¦
+    private float targetPosition = 0f; // ç›®æ¨™ä½ç½®
+    public float delayBeforeScroll = 3f; // æ»¾å‹•å‰çš„å»¶é²æ™‚é–“ï¼ˆç§’ï¼‰
 
 
-
-
-    // ·s¼W blendshape Äæ¦ì
-    public SkinnedMeshRenderer characterMesh; // ¼Ò«¬ªº SkinnedMeshRenderer
-    private int blendShapeA = 39; // "a" ¹ïÀ³ªº BlendShape ¯Á¤Ş
-    private int blendShapeI = 40; // "i" ¹ïÀ³ªº BlendShape ¯Á¤Ş
-    private int blendShapeU = 41; // "u" ¹ïÀ³ªº BlendShape ¯Á¤Ş
-    private int blendShapeE = 42; // "e" ¹ïÀ³ªº BlendShape ¯Á¤Ş
-    private int blendShapeO = 43; // "o" ¹ïÀ³ªº BlendShape ¯Á¤Ş
+    // è²éŸ³å˜´å‹å‹•ç•«ç”¨çš„ blendshape åƒæ•¸
+    public SkinnedMeshRenderer characterMesh; // ï¿½Ò«ï¿½ï¿½ï¿½ SkinnedMeshRenderer
+    private int blendShapeA = 39; // "a" ç™¼éŸ³çš„ BlendShape ç´¢å¼•
+    private int blendShapeI = 40; // "i" ç™¼éŸ³çš„ BlendShape ç´¢å¼•
+    private int blendShapeU = 41; // "u" ç™¼éŸ³çš„ BlendShape ç´¢å¼•
+    private int blendShapeE = 42; // "e" ç™¼éŸ³çš„ BlendShape ç´¢å¼•
+    private int blendShapeO = 43; // "o" ç™¼éŸ³çš„ BlendShape ç´¢å¼•
 
     public Animator animator;
     private int leftHandLayerIndex = 1;
@@ -57,12 +55,12 @@ public class UnityClientVoiceAPI : MonoBehaviour
     void Start()
     {
         animator.SetLayerWeight(leftHandLayerIndex, 0);
-        
+
     }
 
     void Update()
     {
-        
+
 
         ProcessRecordingInput();
     }
@@ -72,7 +70,7 @@ public class UnityClientVoiceAPI : MonoBehaviour
         if (audioSource.isPlaying)
         {
             //Debug.Log("Audio is playing, triggering AnimateMouth()");
-            AnimateMouth();  // ¼½©ñ­µÀW®É¶i¦æ¤f«¬°Êµe
+            AnimateMouth();  // ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½É¶iï¿½ï¿½fï¿½ï¿½ï¿½Êµe
         }
         else
         {
@@ -82,7 +80,7 @@ public class UnityClientVoiceAPI : MonoBehaviour
 
     private void ProcessRecordingInput()
     {
-        // ÀË¬d startTalk «öÁä ©Î Áä½L "K" Áä
+        // ï¿½Ë¬d startTalk ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½L "K" ï¿½ï¿½
         if ((startTalk.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.K)) && !isRecording)
         {
             StartRecording();
@@ -90,7 +88,7 @@ public class UnityClientVoiceAPI : MonoBehaviour
         }
         else if ((startTalk.action.WasReleasedThisFrame() || Input.GetKeyUp(KeyCode.K)) && isRecording)
         {
-            StartCoroutine(DelayStopRecording(1f)); // ©µ¿ğ 1 ¬í°±¤î¿ı­µ
+            StartCoroutine(DelayStopRecording(1f)); // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             TalkingInterface.SetActive(!TalkingInterface.activeSelf);
             LoadingInterface.SetActive(!LoadingInterface.activeSelf);
 
@@ -100,10 +98,10 @@ public class UnityClientVoiceAPI : MonoBehaviour
     {
         while (true)
         {
-            // ½wºC±N verticalNormalizedPosition ½Õ¾ã¨ì¥Ø¼Ğ¦ì¸m
+            // å¹³æ»‘åœ°å°‡ verticalNormalizedPosition ç§»å‹•åˆ°ç›®æ¨™ä½ç½®
             scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, targetPosition, scrollSpeed * Time.deltaTime);
 
-            // ÀË¬d¦pªG¥Ø¼Ğ¦ì¸m¤w¸g«Ü±µªñ¡A´Nµ²§ô·Æ°Ê
+            // å¦‚æœå·²æ¥è¿‘ç›®æ¨™ä½ç½®ï¼ŒçµæŸæ»¾å‹•
             if (Mathf.Abs(scrollRect.verticalNormalizedPosition - targetPosition) < 0.01f)
             {
                 scrollRect.verticalNormalizedPosition = targetPosition;
@@ -112,13 +110,13 @@ public class UnityClientVoiceAPI : MonoBehaviour
             yield return null;
         }
     }
-    // ©µ¿ğ«á¶}©lºu°Ê
+    // å»¶é²å¹¾ç§’å¾Œè‡ªå‹•é–‹å§‹æ»¾å‹•èŠå¤©è¦–çª—
     IEnumerator DelayedScroll()
     {
-        yield return new WaitForSeconds(delayBeforeScroll); // µ¥«İ«ü©wªº¬í¼Æ
+        yield return new WaitForSeconds(delayBeforeScroll); // ç­‰å¾…è¨­å®šçš„å»¶é²ç§’æ•¸
         scrollRect.verticalNormalizedPosition = 1f;
         targetPosition = 0f;
-        StartCoroutine(AutoScroll()); // ¶}©l¦Û°Êºu°Ê
+        StartCoroutine(AutoScroll()); // é–‹å§‹æ»¾å‹•
 
     }
     IEnumerator DelayStopRecording(float delay)
@@ -217,16 +215,16 @@ public class UnityClientVoiceAPI : MonoBehaviour
             {
                 Debug.Log("Audio successfully sent!");
 
-                // ¸ÑªR JSON ©M¼½©ñ­µÀW
+                // è§£æ JSON æˆ–å¤šéƒ¨ä»½å›æ‡‰
                 if (www.downloadHandler != null)
                 {
-                    // Àò¨úÃä¬É
+                    // å–å¾—é‚Šç•Œï¼ˆboundaryï¼‰
                     string boundary = GetBoundaryFromContentType(www.GetResponseHeader("Content-Type"));
 
                     byte[] responseData = www.downloadHandler.data;
                     Debug.Log($"Response data length: {responseData.Length} bytes");
 
-                    // ¼W¥[½Õ¸Õ«H®§¡A¥´¦L³¡¤À¦^À³¤º®e
+                    // é¡¯ç¤ºéƒ¨åˆ†å›æ‡‰å…§å®¹ï¼Œé¿å…è¼¸å‡ºéé•·
                     string responsePreview = Encoding.UTF8.GetString(responseData, 0, Mathf.Min(responseData.Length, 500));
                     Debug.Log($"Response content preview (first 500 chars): {responsePreview}");
 
@@ -278,15 +276,20 @@ public class UnityClientVoiceAPI : MonoBehaviour
                     string jsonString = section.Substring(startIndex, endIndex - startIndex + 1);
                     Debug.Log($"Parsed JSON string: {jsonString}");
 
-                    // ¸ÑªR JSON ¨Ã±q¤¤Àò¨ú 'response' Äæ¦ì
+                    // è§£æ JSON ä¸¦å–å¾— 'response' èˆ‡ 'action' æ¬„ä½
+                    /*
+                        llm prompt:
+                            ç•¶ç”¨æˆ¶å«ä½ "è·Ÿè‘—ä½ "æ™‚ã€‚
+                            ä¸€å¾‹å›ç­”: '<action>1</action>' 
+                    */
                     ActionResponseWithText actionResponse = JsonUtility.FromJson<ActionResponseWithText>(jsonString);
                     Debug.Log("Action: " + actionResponse.action);
                     Debug.Log("Response Text: " + actionResponse.response);
 
-                    // §ó·s UI Åã¥Ü
+                    // é¡¯ç¤ºå›æ‡‰æ–‡å­—åˆ° UI ä¸Š
                     ChatText.text = $"{actionResponse.response}";
 
-                    // ©I¥s TeacherActions ªº ExecuteAction ¤èªk
+                    // åŸ·è¡Œç›¸å°æ‡‰çš„ TeacherActions æ–¹æ³•
                     teacherActions.ExecuteAction(actionResponse.action);
                 }
                 else
@@ -302,11 +305,11 @@ public class UnityClientVoiceAPI : MonoBehaviour
                     string responseText = section.Substring(startIndex).Trim();
                     Debug.Log($"Extracted text/plain response: {responseText}");
 
-                    // Åã¥Ü¦b TextMeshPro ¤¤
+                    // é¡¯ç¤ºç´”æ–‡å­—å…§å®¹åˆ° TextMeshPro UI
                     ChatText.text = $"{responseText}";
                 }
             }
-            else if (section.Contains("Content-Type: audio/wav"))  
+            else if (section.Contains("Content-Type: audio/wav"))
             {
                 int startIndex = section.IndexOf("\r\n\r\n") + 4;
                 if (startIndex < section.Length)
@@ -314,16 +317,16 @@ public class UnityClientVoiceAPI : MonoBehaviour
                     string base64AudioData = section.Substring(startIndex).Trim();
                     Debug.Log($"Base64 audio data length: {base64AudioData.Length}");
 
-                    // ÀË¬d Base64 ¦r¦ê¬O§_¦³®Ä
+                    // é©—è­‰ Base64 å­—ä¸²æ˜¯å¦ç‚ºæœ‰æ•ˆéŸ³è¨Šè³‡æ–™
                     if (base64AudioData.Length > 0)
                     {
                         try
                         {
                             byte[] audioData = Convert.FromBase64String(base64AudioData);
                             Debug.Log($"Decoded audio data length: {audioData.Length} bytes");
-                            StartCoroutine(PlayAudio(audioData));  // ¨Ï¥Î PlayAudio ¼½©ñ­µ°T
-                            LoadingInterface.SetActive(!LoadingInterface.activeSelf);//Ãöloading
-                            ChatInterface.SetActive(!ChatInterface.activeSelf);//¶}¹ï¸Ü®Ø
+                            StartCoroutine(PlayAudio(audioData));  // æ’­æ”¾éŸ³è¨Š
+                            LoadingInterface.SetActive(!LoadingInterface.activeSelf); // åˆ‡æ› UI é¡¯ç¤ºç‹€æ…‹ï¼ˆè¼‰å…¥ç•«é¢çµæŸï¼ŒèŠå¤©ç•«é¢å‡ºç¾ï¼‰
+                            ChatInterface.SetActive(!ChatInterface.activeSelf); // å»¶é²æ»¾å‹•èŠå¤©ä»‹é¢
                             StartCoroutine(DelayedScroll());
                         }
                         catch (FormatException e)
@@ -344,14 +347,15 @@ public class UnityClientVoiceAPI : MonoBehaviour
         }
     }
 
+    // æ’­æ”¾éŸ³è¨Šçš„å”ç¨‹ï¼Œæ’­æ”¾å®Œç•¢å¾ŒåŸ·è¡Œè¡¨æƒ…å‹•ç•«
     IEnumerator PlayAudio(byte[] audioData)
     {
-        // ­×§ïÁ{®ÉÀÉ®×¸ô®|¬° .wav
+        // å»ºç«‹æš«å­˜éŸ³è¨Šæª”æ¡ˆ temp.wav
         string tempFilePath = Path.Combine(Application.persistentDataPath, "temp.wav");
         File.WriteAllBytes(tempFilePath, audioData);
         Debug.Log($"Audio data written to temp file: {tempFilePath}");
 
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + tempFilePath, AudioType.WAV)) 
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + tempFilePath, AudioType.WAV))
         {
             yield return www.SendWebRequest();
 
@@ -372,47 +376,46 @@ public class UnityClientVoiceAPI : MonoBehaviour
                     audioSource.Play();
                     Debug.Log("AudioClip played successfully.");
 
-                    // ¼·©ñ°Êµe¡]±N¥ª¤â°Êµe¼hªºÅv­«³]¬° 1¡^
-                    animator.SetFloat("talkingBlend", Mathf.Lerp(animator.GetFloat("talkingBlend"), 1, Time.deltaTime * 5));  // ±Ò¥Î»¡¸Ü°Êµe
+                    // èª¿æ•´å‹•ç•«åƒæ•¸é–‹å§‹èªªè©±
+                    animator.SetFloat("talkingBlend", Mathf.Lerp(animator.GetFloat("talkingBlend"), 1, Time.deltaTime * 5));  // ï¿½Ò¥Î»ï¿½ï¿½Ü°Êµe
                     animator.SetLayerWeight(leftHandLayerIndex, 1);
 
-                    // µ¥«İ­µÀW¼½©ñ§¹²¦
+                    // ç­‰å¾…éŸ³è¨Šæ’­æ”¾å®Œç•¢
                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                    //Ãö¹ï¸Ü®Ø
+                    // æ’­æ”¾å®Œç•¢å¾Œå»¶é²ä¸€æ®µæ™‚é–“ï¼Œç„¶å¾Œé—œé–‰èŠå¤©ä»‹é¢
                     yield return new WaitForSeconds(delayBeforeScroll);
                     ChatInterface.SetActive(!ChatInterface.activeSelf);
 
-                    // °±¤î°Êµe¡]±N¥ª¤â°Êµe¼hªºÅv­«³]¬° 0¡^
+                    // åœæ­¢èªªè©±å‹•ç•«ï¼Œå›åˆ° Idle ç‹€æ…‹
                     animator.SetLayerWeight(leftHandLayerIndex, 0);
-                    animator.SetFloat("talkingBlend", Mathf.Lerp(animator.GetFloat("talkingBlend"), 0, Time.deltaTime * 5));  // ¦^¨ìIdle°Êµe
+                    animator.SetFloat("talkingBlend", Mathf.Lerp(animator.GetFloat("talkingBlend"), 0, Time.deltaTime * 5));  // ï¿½^ï¿½ï¿½Idleï¿½Êµe
                 }
                 Debug.Log($"Temporary file deleted: {tempFilePath}");
             }
         }
     }
 
-    // ¥Î©ó¤f«¬°Êµeªº¨ç¼Æ
+    // æ ¹æ“šéŸ³è¨Šé »è­œè³‡æ–™åšå˜´å‹å‹•ç•«
     private void AnimateMouth()
     {
-        float[] spectrum = new float[256];  // ¥Î©óÀx¦s­µÀWÀWÃĞ¼Æ¾Ú
+        float[] spectrum = new float[256];  // å„²å­˜ FFT é »è­œçš„é™£åˆ—
         audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
-        // ½Õ¾ã©ñ¤j­¿²v¡A¨Ï¤f«¬ÅÜ¤Æ§ó¥[¦ÛµM
-        float aStrength = Mathf.Clamp(spectrum[1] * 2500, 0, 45);  // ±N³Ì¤j­È±±¨î¦b 100 ¥H¤º
+        // å–ä¸åŒé »ç‡ç¯„åœçš„éŸ³é‡å€¼ä¾†æ¨¡æ“¬å„æ¯éŸ³å˜´å‹
+        float aStrength = Mathf.Clamp(spectrum[1] * 2500, 0, 45);  // ï¿½Nï¿½Ì¤jï¿½È±ï¿½ï¿½ï¿½b 100 ï¿½Hï¿½ï¿½
         float iStrength = Mathf.Clamp(spectrum[3] * 7000, 0, 70);
         float uStrength = Mathf.Clamp(spectrum[5] * 5000, 0, 80);
         float eStrength = Mathf.Clamp(spectrum[7] * 6000, 0, 60);
         float oStrength = Mathf.Clamp(spectrum[9] * 4000, 0, 45);
 
-        // ³]©w blendshape Äæ¦ìªº­È¡A¼ÒÀÀ¤f«¬ÅÜ¤Æ
+        // å¥—ç”¨åˆ°å°æ‡‰çš„ blendshape æ¬Šé‡
         characterMesh.SetBlendShapeWeight(blendShapeA, aStrength);
         characterMesh.SetBlendShapeWeight(blendShapeI, iStrength);
         characterMesh.SetBlendShapeWeight(blendShapeU, uStrength);
         characterMesh.SetBlendShapeWeight(blendShapeE, eStrength);
         characterMesh.SetBlendShapeWeight(blendShapeO, oStrength);
 
-        // Debug ¥Î¨ÓÀË¬d¨C­Ó¤f«¬ªºÅv­«
         Debug.Log($"BlendShape A: {aStrength}, I: {iStrength}, U: {uStrength}, E: {eStrength}, O: {oStrength}");
     }
 
