@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,18 +8,18 @@ public class TeacherActions : MonoBehaviour
 
     void Start()
     {
-        // Àò¨ú¦WºÙ¬° "¥D­nµêÀÀ¾ÉÄı­û" ªº¨¤¦âªº Animator ²Õ¥ó
-        GameObject hutao = GameObject.Find("¥D­nµêÀÀ¾ÉÄı­û");
+        // Ã€Ã²Â¨ÃºÂ¦WÂºÃ™Â¬Â° "Â¥DÂ­nÂµÃªÃ€Ã€Â¾Ã‰Ã„Ã½Â­Ã»" ÂªÂºÂ¨Â¤Â¦Ã¢ÂªÂº Animator Â²Ã•Â¥Ã³
+        GameObject hutao = GameObject.Find("ä¸»è¦è™›æ“¬å°è¦½å“¡");
         if (hutao != null)
         {
             hutaoAnimator = hutao.GetComponent<Animator>();
         }
         else
         {
-            Debug.LogError("Cannot find GameObject named '¥D­nµêÀÀ¾ÉÄı­û'");
+            Debug.LogError("Cannot find GameObject named 'ä¸»è¦è™›æ“¬å°è¦½å“¡'");
         }
 
-        // ¶}©l¨óµ{¡Aµ¥«İ¤­¬í«á°õ¦æ ActionZero ¤èªk
+        // Â¶}Â©lÂ¨Ã³Âµ{Â¡AÂµÂ¥Â«ÃÂ¤Â­Â¬Ã­Â«Ã¡Â°ÃµÂ¦Ã¦ ActionZero Â¤Ã¨Âªk
         //StartCoroutine(ExecuteActionZeroAfterDelay(5f));
     }
 
@@ -29,30 +29,30 @@ public class TeacherActions : MonoBehaviour
         ActionZero();
     }
 
-    // ©w¸q¦UºØ action ªº¥\¯à
+    // Â©wÂ¸qÂ¦UÂºÃ˜ action ÂªÂºÂ¥\Â¯Ã 
     public void ActionOne()
     {
         Debug.Log("Action One Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // Â¹ÃªÂ»ÃšÂ¥\Â¯Ã Â¥NÂ½X
     }
 
     public void ActionTwo()
     {
         Debug.Log("Action Two Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // Â¹ÃªÂ»ÃšÂ¥\Â¯Ã Â¥NÂ½X
     }
 
     public void ActionThree()
     {
         Debug.Log("Action Three Executed!");
-        // ¹ê»Ú¥\¯à¥N½X
+        // Â¹ÃªÂ»ÃšÂ¥\Â¯Ã Â¥NÂ½X
     }
 
     public void ActionZero()
     {
         Debug.Log("Action Zero Executed!");
 
-        // ³]¸m isDancing ¬° true ¨ÓÄ²µo°Êµeª¬ºA¤Á´«
+        // Â³]Â¸m isDancing Â¬Â° true Â¨Ã“Ã„Â²ÂµoÂ°ÃŠÂµeÂªÂ¬ÂºAÂ¤ÃÂ´Â«
         if (hutaoAnimator != null)
         {
             hutaoAnimator.SetBool("isDancing", true);
@@ -65,7 +65,7 @@ public class TeacherActions : MonoBehaviour
 
     public void ExecuteAction(int action)
     {
-        // ®Ú¾Ú action ­È°õ¦æ¬ÛÀ³ªº¥\¯à
+        // Â®ÃšÂ¾Ãš action Â­ÃˆÂ°ÃµÂ¦Ã¦Â¬Ã›Ã€Â³ÂªÂºÂ¥\Â¯Ã 
         switch (action)
         {
             case 0:

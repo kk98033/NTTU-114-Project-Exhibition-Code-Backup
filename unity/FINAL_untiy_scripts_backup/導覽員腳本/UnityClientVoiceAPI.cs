@@ -22,7 +22,7 @@ public class UnityClientVoiceAPI : MonoBehaviour
     private AudioClip audioClip;
     private bool isRecording = false;
 
-    private string apiUrl = "http://127.0.0.1:6969/voice_chat";
+    private string apiUrl = "http://210.240.160.27:443/voice_chat";
     //private string apiUrl = "http://127.0.0.1:/voice_chat";
 
     public TeacherActions teacherActions;

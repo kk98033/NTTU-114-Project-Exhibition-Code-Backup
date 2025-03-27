@@ -1,44 +1,56 @@
-using UnityEngine;
-using TMPro; // ²K¥[©R¦WªÅ¶¡
+ï»¿using UnityEngine;
+using System;
+using TMPro; // æ·»åŠ  TextMeshPro å‘½åç©ºé–“
 using System.Collections;
 
 public class SharedButtonManager : MonoBehaviour
 {
-    public CanvasGroup buttonGroup; // Canvas Group ¥Î©ó²H¤J²H¥X
-    public RectTransform buttonTransform; // «ö¶s²Õªº¤÷ª«¥ó
-    public TMP_Text[] buttonTexts; // ¨Ï¥Î TextMeshPro ªº«ö¶s¤å¦r
-    public float buttonHeightOffset = 2f; // «ö¶s°ª«×°¾²¾
-    public float fadeDuration = 0.5f; // ²H¤J²H¥Xªº®É¶¡
+    public CanvasGroup buttonGroup; // Canvas Group ç”¨æ–¼æ·¡å…¥æ·¡å‡º
+    public RectTransform buttonTransform; // æŒ‰éˆ•çµ„çš„çˆ¶ç‰©ä»¶
+    public TMP_Text[] buttonTexts; // ä½¿ç”¨ TextMeshPro çš„æŒ‰éˆ•æ–‡å­—
+    public float buttonHeightOffset = 2f; // æŒ‰éˆ•é«˜åº¦åç§»
+    public float fadeDuration = 0.5f; // æ·¡å…¥æ·¡å‡ºçš„æ™‚é–“
 
-    // Åã¥Ü«ö¶s²Õ
+    public Transform playerTransform; // ç©å®¶ç‰©ä»¶
+    public Vector3 offset; // åç§»é‡ï¼ˆå‰å¾Œå·¦å³ï¼‰
+
+    private void Update()
+    {
+        if (buttonGroup.alpha > 0) // ç•¶ UI å¯è¦‹æ™‚æ‰æ›´æ–°
+        {
+            FacePlayer();
+        }
+    }
+
+    // é¡¯ç¤ºæŒ‰éˆ•çµ„
     public void ShowButtons(Vector3 position)
     {
         Debug.Log($"ShowButtons called. Position: {position}");
 
-        // §ó·s«ö¶s²Õªº¦ì¸m
-        buttonTransform.position = position + Vector3.up * buttonHeightOffset;
+        // æ›´æ–°æŒ‰éˆ•çµ„çš„ä½ç½®ï¼ŒåŠ ä¸Šåç§»
+        buttonTransform.position = position + Vector3.up * buttonHeightOffset + offset;
         Debug.Log($"ButtonTransform new position: {buttonTransform.position}");
 
-        // °±¤î·í«e©Ò¦³ªº Coroutine
+        // åœæ­¢ç•¶å‰æ‰€æœ‰çš„ Coroutine
         StopAllCoroutines();
 
-        // ±Ò°Ê²H¤J°Êµe
-        StartCoroutine(FadeCanvasGroup(buttonGroup, 1)); // ²H¤J
+        // é–‹å•Ÿæ·¡å…¥å‹•ç•«
+        StartCoroutine(FadeCanvasGroup(buttonGroup, 1)); // æ·¡å…¥
     }
 
-    // ÁôÂÃ«ö¶s²Õ
+    // éš±è—æŒ‰éˆ•çµ„
     public void HideButtons()
     {
         Debug.Log("HideButtons called.");
 
-        // °±¤î·í«e©Ò¦³ªº Coroutine
+        // åœæ­¢ç•¶å‰æ‰€æœ‰çš„ Coroutine
         StopAllCoroutines();
 
-        // ±Ò°Ê²H¥X°Êµe
-        StartCoroutine(FadeCanvasGroup(buttonGroup, 0)); // ²H¥X
+        // é–‹å•Ÿæ·¡å‡ºå‹•ç•«
+        StartCoroutine(FadeCanvasGroup(buttonGroup, 0)); // æ·¡å‡º
     }
 
-    // §ó·s«ö¶s¤å¦r
+    // æ›´æ–°æŒ‰éˆ•æ–‡å­—
     public void UpdateButtonText(int index, string newText)
     {
         if (index >= 0 && index < buttonTexts.Length)
@@ -52,7 +64,7 @@ public class SharedButtonManager : MonoBehaviour
         }
     }
 
-    // ±±¨î Canvas Group ªº²H¤J²H¥X
+    // æ§åˆ¶ Canvas Group çš„æ·¡å…¥æ·¡å‡º
     private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float targetAlpha)
     {
         Debug.Log($"FadeCanvasGroup called. Target Alpha: {targetAlpha}");
@@ -69,5 +81,22 @@ public class SharedButtonManager : MonoBehaviour
 
         canvasGroup.alpha = targetAlpha;
         Debug.Log($"Fade completed. CanvasGroup alpha is now: {canvasGroup.alpha}");
+    }
+
+    // æŒçºŒé¢å‘ç©å®¶
+    private void FacePlayer()
+    {
+        if (playerTransform == null)
+        {
+            UnityEngine.Debug.LogWarning("Player transform is not assigned.");
+            return;
+        }
+
+        // è¨­ç½® UI é¢å‘ç©å®¶
+        Vector3 direction = buttonTransform.position - playerTransform.position; // åè½‰æ–¹å‘
+        direction.y = 0; // ä¿æŒæ°´å¹³æ—‹è½‰
+        buttonTransform.forward = direction.normalized;
+
+        //Debug.Log($"ButtonTransform facing player at: {playerTransform.position}");
     }
 }
